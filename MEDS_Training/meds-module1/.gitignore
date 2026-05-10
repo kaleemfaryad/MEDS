@@ -1,0 +1,22 @@
+# 🔧 Build artifacts
+build/
+*.o
+*.d
+
+# 🧪 Simulation outputs
+*.vcd
+*.fsdb
+*.vpd
+simv
+simv.daidir/
+csrc/
+
+# 📄 Logs
+*.log
+!important.log
+
+# 💻 Editor / OS files
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db

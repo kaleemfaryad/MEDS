@@ -1,0 +1,3 @@
+ERROR issue
+WARNING warning
+PASS test
