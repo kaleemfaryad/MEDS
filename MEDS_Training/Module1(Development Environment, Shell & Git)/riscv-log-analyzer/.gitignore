@@ -4,8 +4,6 @@ output/*
 # Object files
 *.o
 
-# Logs
-*.log
 
 # Temporary files
 *.tmp
