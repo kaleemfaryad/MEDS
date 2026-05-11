@@ -10,10 +10,8 @@ build/
 simv
 simv.daidir/
 csrc/
-
-# 📄 Logs
-*.log
-!important.log
+# other .git
+MEDS_Training/Module1(Developement Environment, Shell & Git)/Day4/
 
 # 💻 Editor / OS files
 .vscode/
