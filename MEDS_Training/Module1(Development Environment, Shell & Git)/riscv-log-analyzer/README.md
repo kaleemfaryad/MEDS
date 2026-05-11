@@ -1,24 +1,48 @@
 # RISC-V Log Analyzer
 
-A shell-based tool for analyzing RISC-V simulation logs.
+## Project Overview
 
-## Features
+A shell-based log analysis tool that processes RISC-V simulation logs and generates structured reports.
 
-- Parse simulation logs
-- Count PASS/FAIL/SKIP tests
-- Generate statistics
-- Display failed tests
-- Generate HTML reports
-- Support CSV output
+It extracts:
 
-## Installation
+- Total tests
+- Pass / Fail / Skip counts
+- Pass rate
+- Execution time statistics
+- Failed test names
+
+## Project Structure
+
+riscv-log-analyzer/
+├── README.md
+├── Makefile
+├── scripts/
+├── test_data/
+├── output/
+├── docs/
+
+## Setup
 
 ```bash
 make setup
+
 Usage
-bash scripts/analyze.sh test_data/sample_fail.log
-Example
-bash scripts/analyze.sh test_data/sample_fail.log --format csv
-Generate Report
+Run all logs:
+make all
+Run tests:
+make test
+Generate report:
 make report
+
+Manual execution:
+bash scripts/analyze.sh test_data/sample_pass.log
+
+Output Example
+Total tests: 25
+Passed: 22
+Failed: 2
+Skipped: 1
+Pass rate: 88%
+
 ```
