@@ -9,12 +9,11 @@ bash scripts/analyze.sh <logfile> [options]
 ```
 
 Options
-| Option | Description | |
-| --------------- | ----------- | ------------- |
-| --format text | csv | Output format |
-| --output <file> | Save output | |
-| --verbose | Debug mode | |
-| --help | Show help | |
+Option ||Description
+--format text|csv ||Output format
+--output <file> ||Save output to file
+--verbose ||Enable debug mode
+--help ||Show help message
 
 Examples
 Basic run:
