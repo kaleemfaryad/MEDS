@@ -1,0 +1,73 @@
+c pipe line:
+preprocessor: gcc -E main.c -o main.i 
+compilation: gcc -S main.c -o main.s
+assembly: gcc -c main.c -o main.o 
+linking: gcc  main.o -o main
+all-in command:
+gcc -Wall -Wextra -std=c11 -g -o main main.c
+| Flag       | Meaning                   |
+| ---------- | ------------------------- |
+| `-Wall`    | Enable common warnings    |
+| `-Wextra`  | Extra warnings            |
+| `-std=c11` | Use C11 standard          |
+| `-g`       | Add debugging information |
+| `-O0`      | No optimization           |
+| `-O2`      | Optimize for speed        |
+fixed-width datatypes:
+| Type       | Size           | Use               |
+| ---------- | -------------- | ----------------- |
+| `uint8_t`  | 8 bits         | Bytes             |
+| `uint16_t` | 16 bits        | Half-word         |
+| `uint32_t` | 32 bits        | Registers         |
+| `uint64_t` | 64 bits        | Addresses         |
+| `int32_t`  | 32 bits signed | Signed arithmetic |
+
+RISC-V R-Type Instruction Format
+R-type instructions (like add, sub) use this layout:
+31          25 24   20 19   15 14  12 11    7 6      0
++-------------+-------+-------+------+--------+--------+
+|   funct7    |  rs2  |  rs1  |funct3|   rd   | opcode|
++-------------+-------+-------+------+--------+--------+
+
+| Field  | Bits   | Purpose              |
+| ------ | ------ | -------------------- |
+| opcode | 7 bits | Instruction type     |
+| rd     | 5 bits | Destination register |
+| funct3 | 3 bits | Operation subtype    |
+| rs1    | 5 bits | Source register 1    |
+| rs2    | 5 bits | Source register 2    |
+| funct7 | 7 bits | Extra operation info |
+
+#define EXTRACT_BITS(val, high, low) \
+(((val) >> (low)) & ((1U << ((high)-(low)+1)) - 1))
+
+(val) >> (low) // moving desired value at the right side of the instruction 
+(1U << ((high)-(low)+1) // creating mask , 1U is unsigned 1
+(((val) >> (low)) & ((1U << ((high)-(low)+1)) - 1)) // by AND we found the exact value that we need
+
+// Set bit N
+#define SET_BIT(val, n) ((val) | (1U << (n)))
+// Clear bit N
+#define CLEAR_BIT(val, n) ((val) & ~(1U << (n)))
+// Toggle bit N
+#define TOGGLE_BIT(val, n) ((val) ^ (1U << (n)))
+// Check if bit N is set
+#define IS_BIT_SET(val, n) (((val) >> (n)) & 1U)
+// Sign-extend a value from bit_width to 32 bits
+int32_t sign_extend(uint32_t val, int bit_width) {
+uint32_t sign_bit = 1U << (bit_width - 1);
+return (int32_t)((val ^ sign_bit) - sign_bit);
+}
+Hardware Connection: Instruction Decoding
+The bit extraction code above is EXACTLY what your RISC-V processor does in hardware. In Verilog,
+you write assign opcode = instruction[6:0]. In C, you write (instruction & 0x7F). Same operation,
+different syntax. Mastering this in C prepares you to think like the hardware.
+
+
+
+
+opcode = 0x33 -> execute_r_tpye(instruction) -> R-type
+opcode = 0x13 -> execute_i_tpye(instruction) -> intermediate
+opcode = 0x23 -> execute_s_tpye(instruction) -> store
+opcode = 0x63 -> execute_b_tpye(instruction) -> branch
+
