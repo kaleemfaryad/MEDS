@@ -71,3 +71,4 @@ Author
 
 MEDS Module 1 Project
 Student: MUHAMMAD KALEEM
+result = a + b +c
