@@ -1,20 +1,15 @@
-# 🔧 Build artifacts
-build/
-*.o
-*.d
+# Ignore PDFs
+*.pdf
 
-# 🧪 Simulation outputs
-*.vcd
-*.fsdb
-*.vpd
-simv
-simv.daidir/
-csrc/
-# other .git
-MEDS_Training/Module1(Developement Environment, Shell & Git)/Day4/
+# Ignore logs
+*.log
 
-# 💻 Editor / OS files
+# Ignore generated output
+output/
+
+# VSCode
 .vscode/
+
+# Swap files
 *.swp
-.DS_Store
-Thumbs.db
+

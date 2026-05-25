@@ -71,3 +71,14 @@ opcode = 0x13 -> execute_i_tpye(instruction) -> intermediate
 opcode = 0x23 -> execute_s_tpye(instruction) -> store
 opcode = 0x63 -> execute_b_tpye(instruction) -> branch
 
+Day2:
+Stack      → local variables
+Heap       → malloc()
+BSS        → uninitialized globals
+Data       → initialized globals
+Text       → code
+
+
+
+
+
