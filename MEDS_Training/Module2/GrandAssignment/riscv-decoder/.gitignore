@@ -1,0 +1,63 @@
+# =====================================================
+# RISC-V Decoder Project
+# Git Ignore File
+# =====================================================
+
+# Build directories
+build/
+bin/
+
+# Object files
+*.o
+*.obj
+
+# Dependency files
+*.d
+
+# Executables
+decoder
+riscv-decoder
+*.exe
+*.out
+*.elf
+
+# Static & Dynamic Libraries
+*.a
+*.so
+*.dll
+*.lib
+
+# Debug files
+*.gdb
+*.stackdump
+
+# Valgrind logs
+vgcore.*
+valgrind.log
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# VS Code
+.vscode/
+
+# CLion
+.idea/
+
+# Vim
+*.swp
+*.swo
+
+# Backup files
+*.bak
+*.tmp
+
+# Generated logs
+*.log
