@@ -1,0 +1,46 @@
+# Self-Study Summary: RISC-V Privileged Specification
+
+## Introduction
+
+The RISC-V Privileged Architecture defines how a processor manages privileged execution, exceptions, interrupts, and system-level resources. While the unprivileged ISA describes normal instructions such as arithmetic, memory access, and branches, the privileged specification explains how the processor interacts with operating systems, firmware, and hardware. These features are implemented using Control and Status Registers (CSRs), privilege modes, and trap handling mechanisms.
+
+## Machine-Level Control and Status Registers (CSRs)
+
+Control and Status Registers (CSRs) are special-purpose registers used to configure and monitor processor behavior. Unlike general-purpose registers (x0–x31), CSRs store system information such as processor status, exception details, interrupt configuration, and hardware capabilities.
+
+The most important machine-level CSRs include:
+
+* **mstatus:** Stores the processor's current status, including interrupt enable bits, privilege mode information, and execution state. It controls how the processor behaves during interrupts and exceptions.
+* **mtvec:** Stores the base address of the machine trap handler. Whenever an exception or interrupt occurs, the processor jumps to the address stored in this register.
+* **mepc:** Stores the Program Counter (PC) value of the instruction that caused an exception or interrupt. This allows execution to resume correctly after the trap is handled.
+* **mcause:** Records the reason for the trap. It identifies whether the trap was caused by an interrupt or an exception and provides a cause code describing the event.
+* **mtval:** Contains additional information about the trap, such as the faulting memory address or illegal instruction value, depending on the type of exception.
+* **misa:** Describes the processor's supported ISA features and extensions (such as M, A, F, D, and C), allowing software to determine the processor's capabilities.
+
+These CSRs enable firmware and operating systems to manage processor execution safely and efficiently.
+
+## Trap Handling Flow
+
+A trap is any event that temporarily stops normal program execution and transfers control to a trap handler. Traps include exceptions (such as illegal instructions or memory faults) and interrupts (such as timer or external device interrupts).
+
+The trap handling process follows these steps:
+
+1. The processor detects an exception or interrupt.
+2. The current Program Counter (PC) is saved into the **mepc** register.
+3. The reason for the trap is stored in the **mcause** register.
+4. Additional information, if required, is stored in **mtval**.
+5. The processor loads the trap handler address from **mtvec** and begins executing the trap handler.
+6. The trap handler examines **mcause** to determine the cause of the trap and performs the appropriate action.
+7. After handling the event, the **MRET (Machine Return)** instruction restores execution by loading the saved address from **mepc**, allowing the interrupted program to continue.
+
+This mechanism ensures that unexpected events are handled safely without losing the program's execution state.
+
+## Importance of the Privileged Architecture
+
+The privileged architecture separates application software from system software using privilege modes. User applications execute with limited permissions, while firmware and operating systems execute with higher privileges. This separation improves system security, reliability, and stability by preventing ordinary applications from directly accessing sensitive hardware resources.
+
+CSRs provide the communication interface between software and hardware, while the trap handling mechanism enables reliable processing of exceptions and interrupts. Together, these features form the foundation of operating systems, embedded firmware, and modern RISC-V processors.
+
+## Conclusion
+
+The RISC-V Privileged Architecture provides the mechanisms required for secure and efficient processor management. Machine-level CSRs store processor state, configure hardware behavior, and record exception information. The trap handling process uses registers such as **mstatus**, **mtvec**, **mepc**, **mcause**, and **mtval** to safely respond to interrupts and exceptions before returning execution with the **MRET** instruction. These concepts are essential for understanding how operating systems and firmware control RISC-V processors.

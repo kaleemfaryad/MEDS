@@ -1,0 +1,26 @@
+# Self-Study Summary: RISC-V A (Atomic) Extension
+
+## Introduction
+
+The **A (Atomic) Extension** extends the RISC-V instruction set by adding **atomic memory operations**, which are essential for multiprocessor and multithreaded systems. Atomic operations ensure that a sequence of memory operations is completed as a single, indivisible action, preventing interference from other processors or threads. Without atomic instructions, multiple cores accessing the same memory location simultaneously could produce incorrect results due to race conditions.
+
+## What the A Extension Adds
+
+The A extension introduces two categories of instructions:
+
+* **Load-Reserved (LR)** and **Store-Conditional (SC)** instructions
+* **Atomic Memory Operations (AMOs)**
+
+The **LR/SC** instruction pair allows software to implement synchronization primitives such as mutexes and spinlocks. The `lr.w` instruction loads a value from memory while reserving that address. The `sc.w` instruction attempts to store a new value back to the reserved address. The store succeeds only if no other processor has modified the memory since the reservation was made. If another processor changes the memory, the store fails, allowing software to retry the operation safely.
+
+The A extension also provides **Atomic Memory Operations (AMOs)**, such as `amoadd.w`, `amoswap.w`, `amoand.w`, `amoor.w`, and `amoxor.w`. These instructions combine a memory read, an arithmetic or logical operation, and a memory write into a single atomic instruction, ensuring that the operation cannot be interrupted.
+
+## Why It Matters
+
+The A extension is fundamental for modern operating systems and multicore processors. It enables safe communication between multiple CPU cores without data corruption. Operating systems use atomic instructions to implement synchronization mechanisms including mutexes, semaphores, locks, and thread-safe data structures. These instructions are also widely used in parallel programming, databases, and real-time systems where multiple threads share the same memory.
+
+Without the A extension, software would require complex synchronization methods that are slower and less reliable. By providing hardware-supported atomic operations, the A extension improves both performance and correctness in concurrent applications.
+
+## Conclusion
+
+The RISC-V A extension adds hardware support for atomic memory operations that guarantee safe access to shared memory in multicore systems. Through LR/SC instructions and AMO operations, it enables reliable synchronization between processors and forms the foundation of operating systems, multithreaded applications, and parallel computing.
