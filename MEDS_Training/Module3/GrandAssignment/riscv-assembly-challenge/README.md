@@ -7,9 +7,11 @@
 
 # Overview
 
-This repository contains the solutions for the **MEDS Module 3 Grand Assignment**. The assignment focuses on implementing algorithms in **RISC-V Assembly Language** while following the standard RISC-V calling convention.
+This repository contains my solutions for the **MEDS Module 3 Grand Assignment**, implemented entirely in **RISC-V RV32I Assembly Language**.
 
-The repository includes three assembly programming tasks, instruction encoding exercises, and self-study summaries based on the RISC-V specifications.
+The project demonstrates the implementation of array processing algorithms, recursive algorithms, instruction encoding/decoding, and a mini RISC-V disassembler while following the standard **RISC-V Calling Convention (ABI)**.
+
+All programs were assembled and tested using the **Venus RISC-V Simulator**.
 
 ---
 
@@ -19,41 +21,47 @@ The repository includes three assembly programming tasks, instruction encoding e
 riscv-assembly-challenge/
 │
 ├── README.md
-├── .gitignore
+├── ENCODING_WORKSHEET.md
 │
 ├── part1_array_ops.s
-├── part2_recursion.s
+├── part1_array_ops_SelectionSort.s
+├── part2_recursion_fibonacci.s
+├── part2_recursion_TowerHanoi.s
 ├── part3_encoding.s
+├── part3_encoding_bonus.s
 │
-├── screenshots/
-│   ├── part1_output.png
-│   ├── part2_output.png
-│   └── part3_output.png
+├── docs
+│   ├── ENCODING_WORKSHEET.md.txt
+│   ├── EXTENSION_SUMMARY.md.txt
+│   └── PRIVILEGED_SUMMARY.md.txt
 │
-└── docs/
-    ├── ENCODING_WORKSHEET.md
-    ├── PRIVILEGED_SUMMARY.md
-    └── EXTENSION_SUMMARY.md
+└── screenshots
+    ├── part1_array_ops.png
+    ├── part1_array_ops_SelectionSort.png
+    ├── part2_recursion.png
+    ├── part2_recursion_TowerHanoi.png
+    ├── part2_recursion_fibonacci.png
+    └── part3_encoding_bonus.png
 ```
 
 ---
 
 # Development Environment
 
-- ISA: RISC-V RV32I
-- Simulator: Venus RISC-V Simulator
-- Language: RISC-V Assembly
-- Operating System: Ubuntu (WSL)
+- ISA: **RISC-V RV32I**
+- Language: **RISC-V Assembly**
+- Simulator: **Venus RISC-V Simulator**
+- Operating System: **Ubuntu (WSL)**
 
 ---
 
 # How to Run
 
 1. Open the Venus RISC-V Simulator.
-2. Load the required `.s` file.
+2. Load any `.s` assembly source file.
 3. Assemble the program.
 4. Run the program.
-5. Verify the output in the Venus console.
+5. Observe the output in the Venus console.
 
 Each assembly file is independent and can be executed separately.
 
@@ -61,80 +69,24 @@ Each assembly file is independent and can be executed separately.
 
 # Part 1 – Array Processing
 
-File:
+## File
 
 ```text
 part1_array_ops.s
 ```
 
-## Objective
+### Objective
 
-Implement four reusable functions that operate on an integer array.
+Implement reusable assembly functions that operate on an integer array while following the RISC-V calling convention.
 
-The program contains an array of signed integers (including negative values) and computes:
+### Implemented Functions
 
-- Sum of all elements
-- Minimum value
-- Maximum value
-- Count of negative numbers
+- `sum_array()`
+- `find_min()`
+- `find_max()`
+- `count_negative()`
 
-Each function follows the RISC-V calling convention.
-
-## Implemented Functions
-
-### sum_array
-
-**Arguments**
-
-- a0 = Array address
-- a1 = Array size
-
-**Returns**
-
-- a0 = Sum of all elements
-
----
-
-### find_min
-
-**Arguments**
-
-- a0 = Array address
-- a1 = Array size
-
-**Returns**
-
-- a0 = Minimum element
-
----
-
-### find_max
-
-**Arguments**
-
-- a0 = Array address
-- a1 = Array size
-
-**Returns**
-
-- a0 = Maximum element
-
----
-
-### count_negative
-
-**Arguments**
-
-- a0 = Array address
-- a1 = Array size
-
-**Returns**
-
-- a0 = Number of negative elements
-
----
-
-## Sample Output
+### Sample Output
 
 ```text
 Sum: 24
@@ -145,120 +97,117 @@ Negative Count: 4
 
 ---
 
-# Part 2 – Recursive Fibonacci with Memoization
+# Part 1 (Bonus) – Selection Sort
 
-File:
+## File
 
 ```text
-part2_recursion.s
+part1_array_ops_SelectionSort.s
 ```
 
-## Objective
+### Objective
 
-Implement Recursive Fibonacci using memoization.
+Implement the **Selection Sort** algorithm entirely in RISC-V Assembly.
 
-Instead of recomputing previous Fibonacci values repeatedly, previously computed answers are stored inside a cache array located in the `.data` section.
+### Features
 
-## Features
+- In-place sorting
+- Nested loops
+- Element swapping
+- Pointer arithmetic
+- Array traversal
 
-- Genuine recursion
-- Memoization using cache
-- Stack frame management
-- Proper calling convention
+### Sample Output
+
+```text
+Sorted Array:
+-12 -8 -5 -2 1 3 4 6 7 9 10 11
+```
+
+---
+
+# Part 2 – Recursive Fibonacci
+
+## File
+
+```text
+part2_recursion_fibonacci.s
+```
+
+### Objective
+
+Implement the recursive Fibonacci algorithm using proper stack frames and the RISC-V calling convention.
+
+### Features
+
 - Recursive function calls
-- Cache lookup before recursion
+- Stack frame management
+- Register preservation
+- Base cases
+- Recursive computation
 
-## Cache Layout
+### Sample Output
 
 ```text
-cache[0] ... cache[20]
+fib(10) = 55
 ```
 
-Initial value:
+---
+
+# Part 2 – Tower of Hanoi
+
+## File
 
 ```text
--1
+part2_recursion_TowerHanoi.s
 ```
 
-Meaning:
+### Objective
+
+Implement the recursive Tower of Hanoi algorithm.
+
+### Features
+
+- Recursive function calls
+- Stack frame management
+- Parameter passing
+- Character output
+- Proper register preservation
+
+### Sample Output
 
 ```text
-Not computed yet
-```
-
-Whenever a Fibonacci value is calculated, it is stored inside the cache.
-
-## Sample Output
-
-```text
-6765
-```
-
-which is
-
-```text
-fib(20)
+Move disk 1 from A to C
+Move disk 2 from A to B
+Move disk 1 from C to B
+Move disk 3 from A to C
+Move disk 1 from B to A
+Move disk 2 from B to C
+Move disk 1 from A to C
 ```
 
 ---
 
 # Part 3 – Instruction Encoding
 
-File:
+## File
 
 ```text
 part3_encoding.s
 ```
 
-## Objective
+### Objective
 
-Load six machine instructions as hexadecimal values and decode them using bit manipulation.
+Decode RISC-V machine instructions using shift-and-mask operations.
 
-Each instruction is stored using `.word`.
-
-The decoder extracts:
+### Extracted Fields
 
 - Opcode
 - rd
 - rs1
 - funct3
 
-using only:
-
-- Shift Right Logical Immediate (`srli`)
-- AND Immediate (`andi`)
-
-## Instructions Included
-
-| Format | Instruction |
-|---------|-------------|
-| R | add x5,x6,x7 |
-| I | addi x5,x6,10 |
-| S | sw x5,8(x6) |
-| B | beq x5,x6,16 |
-| U | lui x5,0x12345 |
-| J | jal x1,32 |
-
----
-
-## Sample Output
-
-```text
-Opcode: 51   rd: 5   funct3: 0   rs1: 6
-Opcode: 19   rd: 5   funct3: 0   rs1: 6
-Opcode: 35   rd: 8   funct3: 2   rs1: 6
-Opcode: 99   rd:16   funct3: 0   rs1: 5
-Opcode: 55   rd: 5   funct3: 5   rs1: 8
-Opcode:111   rd: 1   funct3: 0   rs1: 0
-```
-
----
-
-# Documentation
-
-## ENCODING_WORKSHEET.md
-
-Contains manual encoding of one instruction from each RISC-V instruction format:
+### Supported Instruction Formats
 
 - R-Type
 - I-Type
@@ -267,75 +216,131 @@ Contains manual encoding of one instruction from each RISC-V instruction format:
 - U-Type
 - J-Type
 
-Each instruction includes:
+---
 
-- Binary encoding
-- Field breakdown
-- Final hexadecimal machine code
+# Part 3 (Bonus) – Mini RISC-V Disassembler
+
+## File
+
+```text
+part3_encoding_bonus.s
+```
+
+### Objective
+
+Extend the instruction decoder to identify the actual instruction mnemonic.
+
+### Supported Instructions
+
+- ADD
+- ADDI
+- SW
+- BEQ
+- LUI
+- JAL
+
+Instead of only extracting instruction fields, the program prints the decoded instruction mnemonic.
 
 ---
 
-## PRIVILEGED_SUMMARY.md
+# Documentation
 
-Summary of the RISC-V Privileged Architecture covering:
+The `docs/` directory contains the required self-study deliverables.
+
+## ENCODING_WORKSHEET.md.txt
+
+Manual instruction encoding for:
+
+- R-Type
+- I-Type
+- S-Type
+- B-Type
+- U-Type
+- J-Type
+
+Including:
+
+- Binary representation
+- Field breakdown
+- Final hexadecimal encoding
+
+---
+
+## PRIVILEGED_SUMMARY.md.txt
+
+Summary of the RISC-V Privileged Architecture including:
 
 - Privilege Levels
+- Machine Mode
+- Supervisor Mode
+- User Mode
 - Control and Status Registers (CSRs)
 - Trap Handling Flow
 
-Based on:
-
-Sections 3.1–3.4 of the RISC-V Privileged Specification.
+Based on Sections **3.1–3.4** of the RISC-V Privileged ISA Specification.
 
 ---
 
-## EXTENSION_SUMMARY.md
+## EXTENSION_SUMMARY.md.txt
 
-Summary of one RISC-V ISA extension covering:
+Summary of the **RISC-V Atomic (A) Extension** including:
 
-- Purpose
-- Important Instructions
-- Practical Applications
+- LR (Load Reserved)
+- SC (Store Conditional)
+- AMO Instructions
+- Zalrsc Extension
+- Zaamo Extension
+- Practical applications in multicore synchronization
 
 ---
 
 # RISC-V Concepts Demonstrated
 
 - RV32I Instruction Set
-- Procedure Calls
-- Stack Management
-- Calling Convention
-- Recursive Functions
-- Memoization
 - Arrays
 - Pointer Arithmetic
-- Bit Manipulation
+- Branch Instructions
+- Loops
+- Functions
+- Calling Convention
+- Stack Frames
+- Recursion
+- Selection Sort
+- Tower of Hanoi
+- Recursive Fibonacci
 - Instruction Encoding
 - Instruction Decoding
-- Shift and Mask Operations
+- Shift-and-Mask Bit Manipulation
+- Mini Disassembler
+
+---
+
+# Screenshots
+
+Execution screenshots for every assignment component are included in the `screenshots/` directory.
 
 ---
 
 # Learning Outcomes
 
-After completing this project, the following concepts were practiced:
+After completing this assignment, I gained practical experience with:
 
 - Writing modular assembly programs
-- Implementing reusable functions
 - Following the RISC-V ABI
-- Managing recursive function calls
-- Using the stack correctly
-- Understanding instruction formats
-- Manual instruction encoding
-- Decoding machine instructions
-- Using shift and mask operations for field extraction
+- Stack management
+- Recursive programming
+- Sorting algorithms
+- Bit manipulation
+- Instruction encoding and decoding
+- Machine instruction analysis
+- Mini disassembler implementation
 
 ---
 
 # References
 
-- RISC-V Unprivileged ISA Specification
-- RISC-V Privileged ISA Specification
+- RISC-V Unprivileged ISA Specification (Volume I)
+- RISC-V Privileged ISA Specification (Volume II)
 - Venus RISC-V Simulator
 - MEDS Module 3 Lab Manual
 
@@ -343,5 +348,5 @@ After completing this project, the following concepts were practiced:
 
 # Author
 
-**Muhammad Kaleem Faryad**
+**Muhammad Kaleem Faryad**  
 
